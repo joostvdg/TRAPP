@@ -1,0 +1,6 @@
+/jboss-as-7.1.1.Final
+/target
+/test-output
+*.project
+/.settings
+.classpath
