@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+       ">
+
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches" ref="cacheFactories"/>
+    </bean>
+
+    <util:set id="cacheFactories">
+        <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="default"/>
+        <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="taxonomy"/>
+        <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="coverage"/>
+        <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="users"/>
+        <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+            <property name="name" value="paging"/>
+            <property name="store">
+                <bean factory-bean="pagingCache" factory-method="asMap"/>
+            </property>
+        </bean>
+    </util:set>
+
+    <bean id="pagingCache" factory-bean="userCacheBuilder" factory-method="build"/>
+
+    <bean id="userCacheBuilder" class="com.google.common.cache.CacheBuilder" factory-method="from">
+        <description>Caches components for user interaction</description>
+        <constructor-arg>
+            <bean class="com.google.common.cache.CacheBuilderSpec" factory-method="parse">
+                <constructor-arg value="maximumSize=200,expireAfterAccess=5m"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+</beans>

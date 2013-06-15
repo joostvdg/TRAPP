@@ -5,13 +5,13 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<mapping class="nl.flusso.example.flussobank.domain.Account" />
-		<mapping class="nl.flusso.example.flussobank.domain.Audit" />
-		<mapping class="nl.flusso.example.flussobank.domain.CreditAccount" />
-		<mapping class="nl.flusso.example.flussobank.domain.SavingsAccount" />
-		<mapping class="nl.flusso.example.flussobank.domain.Transaction" />
-		<mapping class="nl.flusso.example.flussobank.domain.User" />
-		<mapping class="nl.flusso.example.flussobank.domain.UserRole" />
+		<mapping class="org.jiji.trapp.domain.Account" />
+		<mapping class="org.jiji.trapp.domain.Audit" />
+		<mapping class="org.jiji.trapp.domain.CreditAccount" />
+		<mapping class="org.jiji.trapp.domain.SavingsAccount" />
+		<mapping class="org.jiji.trapp.domain.Transaction" />
+		<mapping class="org.jiji.trapp.domain.User" />
+		<mapping class="org.jiji.trapp.domain.UserRole" />
 		
 	</session-factory>
 </hibernate-configuration>

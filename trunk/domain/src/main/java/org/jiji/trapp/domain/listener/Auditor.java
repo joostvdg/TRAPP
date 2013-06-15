@@ -1,7 +1,5 @@
 package org.jiji.trapp.domain.listener;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
@@ -12,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author jvdgriendt
  * 
  */
-@LocalBean
-@Stateless
+
 public class Auditor
 {
 

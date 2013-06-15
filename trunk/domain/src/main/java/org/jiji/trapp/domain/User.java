@@ -5,34 +5,29 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import org.jiji.trapp.domain.listener.Auditor;
-
-
-
 /**
- *
+ * 
  * @author jvdgriendt
  */
 @Entity
-@EntityListeners(Auditor.class)
-public class User extends ModelBase implements Serializable {
+public class User extends ModelBase implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
-    @Column(length=55, nullable=false)
+    @Column(length = 55, nullable = false)
     private String name;
 
-    @Column(length=10, nullable=true)
+    @Column(length = 10, nullable = true)
     private String preposition;
 
-    @Column(length=55, nullable=false)
+    @Column(length = 55, nullable = false)
     private String surname;
 
-    @Column(length=128, nullable=false, unique=true)
+    @Column(length = 128, nullable = false, unique = true)
     private String email;
 
     @ManyToMany
@@ -82,11 +77,11 @@ public class User extends ModelBase implements Serializable {
         this.roles = roles;
     }
 
-    public boolean addRole(UserRole userRole){
+    public boolean addRole(UserRole userRole) {
         return roles.add(userRole);
     }
 
-    public boolean removeRole(UserRole userRole){
+    public boolean removeRole(UserRole userRole) {
         return roles.remove(userRole);
     }
 
@@ -99,11 +94,11 @@ public class User extends ModelBase implements Serializable {
         this.accounts = accounts;
     }
 
-    public boolean addAccount(Account account){
+    public boolean addAccount(Account account) {
         return accounts.add(account);
     }
 
-    public boolean removeAccount(Account account){
+    public boolean removeAccount(Account account) {
         return accounts.remove(account);
     }
 
@@ -140,7 +135,8 @@ public class User extends ModelBase implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s[id=%d, name=%s, preposition=%s, surname=%s]", getClass().getSimpleName(),getId(), name, preposition, surname);
+        return String.format("%s[id=%d, name=%s, preposition=%s, surname=%s]", getClass().getSimpleName(), getId(), name, preposition,
+                surname);
     }
 
 }
