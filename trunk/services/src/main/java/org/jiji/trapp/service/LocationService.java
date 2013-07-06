@@ -1,17 +1,13 @@
 package org.jiji.trapp.service;
 
-import java.util.List;
+import org.jiji.trapp.domain.Location;
 import org.jiji.trapp.dto.LocationDto;
 
 /**
  * @author J van der Griendt
  * 
  */
-public interface LocationService
+public interface LocationService extends DomainControllerService<LocationDto, Location>
 {
-
-    List<LocationDto> getAllLocationsForExport();
-
-    void addNewLocation(LocationDto locationDto);
 
 }

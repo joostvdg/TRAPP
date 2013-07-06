@@ -2,8 +2,8 @@ package org.jiji.trapp.web.controller;
 
 import java.util.List;
 import javax.inject.Inject;
-import org.jiji.trapp.dto.UserDto;
-import org.jiji.trapp.service.UserService;
+import org.jiji.trapp.dto.TravellerDto;
+import org.jiji.trapp.service.TravellerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,29 +16,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 
  */
 @Controller
-@RequestMapping("/user")
-public class UserController
+@RequestMapping("/traveller")
+public class TravellerController
 {
     @Inject
-    private UserService userService;
+    private TravellerService travellerService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDto> showUsers() {
-        return userService.getAllForExport();
+    public List<TravellerDto> getTravellers() {
+        return travellerService.getAllForExport();
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{travellerId}", method = RequestMethod.GET)
     @ResponseBody
-    public UserDto showUser(@PathVariable Long userId) {
-        return userService.getById(userId);
+    public TravellerDto getTraveller(@PathVariable Long travellerId) {
+        return travellerService.getById(travellerId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public @ResponseBody
-    UserDto addNewUser(@RequestBody UserDto userDto) {
-        userService.addNew(userDto);
-        return userDto;
+    void addNewTraveller(@RequestBody TravellerDto travellerDto) {
+        travellerService.addNew(travellerDto);
     }
-
 }
