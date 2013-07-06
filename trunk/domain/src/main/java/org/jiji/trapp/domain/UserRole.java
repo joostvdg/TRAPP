@@ -3,26 +3,21 @@ package org.jiji.trapp.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-
-import org.jiji.trapp.domain.listener.Auditor;
-
-
 
 /**
- *
- * @author jvdgriendt
+ * @author J van der Griendt
+ * 
  */
 @Entity
-@EntityListeners(Auditor.class)
-public class UserRole extends ModelBase implements Serializable {
+public class UserRole extends ModelBase implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
-    @Column(length=25, unique=true, nullable=false)
+    @Column(length = 25, unique = true, nullable = false)
     private String code;
 
-    @Column(length=255, unique=true, nullable=false)
+    @Column(length = 255)
     private String description;
 
     public String getCode() {
@@ -45,4 +40,36 @@ public class UserRole extends ModelBase implements Serializable {
     public String toString() {
         return String.format("%s[id=%d, code=%s, description=%s]", getClass().getSimpleName(), getId(), code, description);
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof UserRole)) {
+            return false;
+        }
+        UserRole other = (UserRole) obj;
+        if (code == null) {
+            if (other.code != null) {
+                return false;
+            }
+        }
+        else if (!code.equals(other.code)) {
+            return false;
+        }
+        return true;
+    }
+
 }

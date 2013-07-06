@@ -11,6 +11,10 @@ import org.jiji.trapp.service.DomainDtoTranslationService;
 import org.jiji.trapp.service.UserService;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author J van der Griendt
+ * 
+ */
 @Service
 public class UserServiceImpl implements UserService, Serializable
 {
@@ -20,6 +24,7 @@ public class UserServiceImpl implements UserService, Serializable
     @Inject
     private UserDao userDao;
 
+    @Inject
     private DomainDtoTranslationService domainDtoTranslationService;
 
     @Override
@@ -38,5 +43,17 @@ public class UserServiceImpl implements UserService, Serializable
     @Override
     public List<User> getAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public void addNewUser(UserDto userDto) {
+        User user = domainDtoTranslationService.translateUser(userDto);
+        userDao.saveAndFlush(user);
+    }
+
+    @Override
+    public UserDto getUserById(Long userId) {
+        User user = userDao.findOne(userId);
+        return domainDtoTranslationService.translateUser(user);
     }
 }

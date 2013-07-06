@@ -23,6 +23,11 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+/**
+ * @author J van der Griendt
+ * @author iColumbo@IRN
+ * 
+ */
 @Configuration
 @ComponentScan("org.jiji.trapp")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -32,8 +37,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport
 
     @SuppressWarnings("unused")
     private ApplicationContext applicationContext;
-
-    public static final String APPLICATION_V2_JSON = "application/eu.icolumbo.web-v2+json";
 
     /* (non-Javadoc)
      * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport#configureMessageConverters(java.util.List)
@@ -45,18 +48,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport
         converter.setObjectMapper(objectMapper);
         List<MediaType> mediaTypes = new ArrayList<MediaType>();
         mediaTypes.add(MediaType.APPLICATION_JSON);
-        mediaTypes.add(MediaType.valueOf(APPLICATION_V2_JSON));
         converter.setSupportedMediaTypes(mediaTypes);
-        // converter.setPrettyPrint(false);
         converters.add(converter);
     }
-
-    /*
-    @Override
-    protected void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(applicationContext.getBean(JsonRequestParamMethodArgumentResolver.class));
-    }
-    */
 
     /**
      * @return
@@ -73,7 +67,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport
     @Qualifier("documentObjectMapper")
     public ObjectMapper buildDocumentObjectMapper() {
         ObjectMapper objectMapper = buildCommonObjectMapper();
-        objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
+        objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
         return objectMapper;
     }
 
@@ -87,7 +81,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport
         objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
-        objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+        objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 
         Version version = new Version(1, 0, 0, "SNAPSHOT");
         SimpleModule module = new SimpleModule("iso8601Serializer", version);

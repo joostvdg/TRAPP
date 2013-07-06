@@ -11,6 +11,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+/**
+ * @author J van der Griendt
+ * @author H Onrust
+ * 
+ */
 @MappedSuperclass
 public abstract class ModelBase implements Serializable
 {
@@ -29,7 +34,6 @@ public abstract class ModelBase implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date created = new Date();
 
-
     public Long getId() {
         return id;
     }
@@ -38,7 +42,6 @@ public abstract class ModelBase implements Serializable
         this.id = id;
     }
 
-
     public Date getLastModified() {
         return lastModified;
     }
@@ -46,7 +49,6 @@ public abstract class ModelBase implements Serializable
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-
 
     public Date getCreated() {
         return created;

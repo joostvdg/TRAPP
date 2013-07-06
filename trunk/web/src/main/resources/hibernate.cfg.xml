@@ -5,13 +5,12 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<mapping class="org.jiji.trapp.domain.Account" />
-		<mapping class="org.jiji.trapp.domain.Audit" />
-		<mapping class="org.jiji.trapp.domain.CreditAccount" />
-		<mapping class="org.jiji.trapp.domain.SavingsAccount" />
-		<mapping class="org.jiji.trapp.domain.Transaction" />
 		<mapping class="org.jiji.trapp.domain.User" />
 		<mapping class="org.jiji.trapp.domain.UserRole" />
+		<mapping class="org.jiji.trapp.domain.Location" />
+		<mapping class="org.jiji.trapp.domain.Traveller" />
+		<mapping class="org.jiji.trapp.domain.Trip" />
+		<mapping class="org.jiji.trapp.domain.Travel" />
 		
 	</session-factory>
 </hibernate-configuration>

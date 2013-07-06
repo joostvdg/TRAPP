@@ -6,11 +6,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 /**
+ * @author J van der Griendt
  * 
- * @author jvdgriendt
  */
 @Entity
 public class User extends ModelBase implements Serializable
@@ -22,7 +21,7 @@ public class User extends ModelBase implements Serializable
     private String name;
 
     @Column(length = 10, nullable = true)
-    private String preposition;
+    private String surnamePrefix;
 
     @Column(length = 55, nullable = false)
     private String surname;
@@ -33,9 +32,6 @@ public class User extends ModelBase implements Serializable
     @ManyToMany
     private Set<UserRole> roles;
 
-    @OneToMany(mappedBy = "owner")
-    private Set<Account> accounts;
-
     public String getName() {
         return name;
     }
@@ -44,12 +40,12 @@ public class User extends ModelBase implements Serializable
         this.name = name;
     }
 
-    public String getPreposition() {
-        return preposition;
+    public String getSurnamePrefix() {
+        return surnamePrefix;
     }
 
-    public void setPreposition(String preposition) {
-        this.preposition = preposition;
+    public void setSurnamePrefix(String surnamePrefix) {
+        this.surnamePrefix = surnamePrefix;
     }
 
     public String getSurname() {
@@ -85,23 +81,6 @@ public class User extends ModelBase implements Serializable
         return roles.remove(userRole);
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
-
-    @SuppressWarnings("unused")
-    private void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public boolean addAccount(Account account) {
-        return accounts.add(account);
-    }
-
-    public boolean removeAccount(Account account) {
-        return accounts.remove(account);
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -135,7 +114,7 @@ public class User extends ModelBase implements Serializable
 
     @Override
     public String toString() {
-        return String.format("%s[id=%d, name=%s, preposition=%s, surname=%s]", getClass().getSimpleName(), getId(), name, preposition,
+        return String.format("%s[id=%d, name=%s, surnamePrefix=%s, surname=%s]", getClass().getSimpleName(), getId(), name, surnamePrefix,
                 surname);
     }
 

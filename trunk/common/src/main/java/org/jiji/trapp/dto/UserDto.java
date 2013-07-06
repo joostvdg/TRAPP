@@ -1,75 +1,51 @@
 package org.jiji.trapp.dto;
 
-import java.io.Serializable;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
-public class UserDto extends AbstractDto implements Serializable {
+/**
+ * @author J van der Griendt
+ * 
+ */
+@JsonRootName("user")
+public class UserDto extends AbstractJsonDto
+{
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -2145471531057856497L;
 
     private String name;
-
-    private String preposition;
-
+    private String surnamePrefix;
     private String surname;
-
     private String email;
 
-    /**
-     * @return the name
-     */
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
-    public final void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the preposition
-     */
-    public final String getPreposition() {
-        return preposition;
+    public String getSurnamePrefix() {
+        return surnamePrefix;
     }
 
-    /**
-     * @param preposition the preposition to set
-     */
-    public final void setPreposition(String preposition) {
-        this.preposition = preposition;
+    public void setSurnamePrefix(String surnamePrefix) {
+        this.surnamePrefix = surnamePrefix;
     }
 
-    /**
-     * @return the surname
-     */
-    public final String getSurname() {
+    public String getSurname() {
         return surname;
     }
 
-    /**
-     * @param surname the surname to set
-     */
-    public final void setSurname(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    /**
-     * @return the email
-     */
-    public final String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
-    public final void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

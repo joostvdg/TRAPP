@@ -2,7 +2,12 @@ package org.jiji.trapp.dto;
 
 import java.io.Serializable;
 
-public class AbstractDto implements Serializable {
+/**
+ * @author jvandergriendt
+ * 
+ */
+public class AbstractJsonDto implements Serializable
+{
 
     /**
      * 
@@ -18,7 +23,8 @@ public class AbstractDto implements Serializable {
     }
 
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(Long id) {
         this.id = id;
@@ -46,15 +52,16 @@ public class AbstractDto implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof AbstractDto)) {
+        if (!(obj instanceof AbstractJsonDto)) {
             return false;
         }
-        AbstractDto other = (AbstractDto) obj;
+        AbstractJsonDto other = (AbstractJsonDto) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;
             }
-        } else if (!id.equals(other.id)) {
+        }
+        else if (!id.equals(other.id)) {
             return false;
         }
         return true;
@@ -67,7 +74,5 @@ public class AbstractDto implements Serializable {
     public String toString() {
         return String.format("%s [id=%d]", getClass().getSimpleName(), getId());
     }
-
-
 
 }
