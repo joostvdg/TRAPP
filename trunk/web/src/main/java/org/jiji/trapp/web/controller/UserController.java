@@ -24,13 +24,13 @@ public class UserController
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<UserDto> showUsers() {
+    public List<UserDto> getUsers() {
         return userService.getAllForExport();
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     @ResponseBody
-    public UserDto showUser(@PathVariable Long userId) {
+    public UserDto getUser(@PathVariable Long userId) {
         return userService.getById(userId);
     }
 

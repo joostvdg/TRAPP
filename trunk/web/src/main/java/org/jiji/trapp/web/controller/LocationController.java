@@ -31,7 +31,7 @@ public class LocationController
 
     @RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
     @ResponseBody
-    public LocationDto getTravel(@PathVariable Long locationId) {
+    public LocationDto getLocation(@PathVariable Long locationId) {
         return locationService.getById(locationId);
     }
 
