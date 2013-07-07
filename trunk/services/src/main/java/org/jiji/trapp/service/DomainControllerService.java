@@ -12,7 +12,9 @@ public interface DomainControllerService<T extends AbstractJsonDto, D extends Mo
 {
     public List<T> getAllForExport();
 
-    public T getById(Long id);
+    public T getExportById(Long id);
+
+    public D getById(Long id);
 
     public void addNew(T t);
 

@@ -10,4 +10,6 @@ import org.jiji.trapp.dto.TravellerDto;
 public interface TravellerService extends DomainControllerService<TravellerDto, Traveller>
 {
 
+    String[] getAllTravellerRoles();
+
 }

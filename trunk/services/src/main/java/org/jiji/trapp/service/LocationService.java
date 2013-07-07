@@ -10,4 +10,6 @@ import org.jiji.trapp.dto.LocationDto;
 public interface LocationService extends DomainControllerService<LocationDto, Location>
 {
 
+    String[] getAllLocationTypes();
+
 }

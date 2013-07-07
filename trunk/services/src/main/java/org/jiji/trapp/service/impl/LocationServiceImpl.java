@@ -3,6 +3,7 @@ package org.jiji.trapp.service.impl;
 import java.io.Serializable;
 import org.jiji.trapp.dao.LocationDao;
 import org.jiji.trapp.domain.Location;
+import org.jiji.trapp.domain.enums.LocationType;
 import org.jiji.trapp.dto.LocationDto;
 import org.jiji.trapp.service.LocationService;
 import org.jiji.trapp.service.translate.impl.LocationTranslator;
@@ -29,6 +30,17 @@ public class LocationServiceImpl extends AbstractDomainControllerService<Locatio
     @Autowired
     public void setLocationTranslator(LocationTranslator locationTranslator) {
         setTranslator(locationTranslator);
+    }
+
+    @Override
+    public String[] getAllLocationTypes() {
+        String[] locationTypes = new String[LocationType.values().length];
+
+        for (int i = 0; i < LocationType.values().length; i++) {
+            locationTypes[i] = LocationType.values()[i].toString();
+        }
+
+        return locationTypes;
     }
 
 }

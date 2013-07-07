@@ -31,7 +31,7 @@ public class TravellerController
     @RequestMapping(value = "/{travellerId}", method = RequestMethod.GET)
     @ResponseBody
     public TravellerDto getTraveller(@PathVariable Long travellerId) {
-        return travellerService.getById(travellerId);
+        return travellerService.getExportById(travellerId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

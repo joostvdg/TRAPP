@@ -9,4 +9,5 @@ import org.jiji.trapp.dto.UserDto;
  */
 public interface UserService extends DomainControllerService<UserDto, User>
 {
+
 }

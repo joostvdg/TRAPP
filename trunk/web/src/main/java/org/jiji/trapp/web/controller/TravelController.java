@@ -32,7 +32,7 @@ public class TravelController
     @RequestMapping(value = "/{travelId}", method = RequestMethod.GET)
     @ResponseBody
     public TravelDto getTravel(@PathVariable Long travelId) {
-        return travelService.getById(travelId);
+        return travelService.getExportById(travelId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

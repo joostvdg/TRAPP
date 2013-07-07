@@ -33,12 +33,14 @@ public class UserTranslator implements Translator<UserDto, User>
 
     @Override
     public User translate(UserDto userDto) {
+        Long id = userDto.getId();
         String name = userDto.getName();
         String surnamePrefix = userDto.getSurnamePrefix();
         String surname = userDto.getSurname();
         String email = userDto.getEmail();
 
         User user = new User();
+        user.setId(id);
         user.setName(name);
         user.setSurnamePrefix(surnamePrefix);
         user.setSurname(surname);

@@ -32,7 +32,7 @@ public class TripController
     @RequestMapping(value = "/{tripId}", method = RequestMethod.GET)
     @ResponseBody
     public TripDto getTrip(@PathVariable Long tripId) {
-        return tripService.getById(tripId);
+        return tripService.getExportById(tripId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

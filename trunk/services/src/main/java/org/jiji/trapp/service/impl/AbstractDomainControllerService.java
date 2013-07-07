@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
+import org.jiji.trapp.service.DomainControllerService;
 import org.jiji.trapp.service.translate.Translator;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +14,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @param <T>
  * @param <D>
  */
-public abstract class AbstractDomainControllerService<T extends AbstractJsonDto, D extends ModelBase>
+public abstract class AbstractDomainControllerService<T extends AbstractJsonDto, D extends ModelBase> implements
+        DomainControllerService<T, D>
 {
 
     private Translator<T, D> translator;
@@ -24,10 +26,19 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         this.translator = translator;
     }
 
+    protected Translator<T, D> getTranslator() {
+        return translator;
+    }
+
     protected void setRepository(JpaRepository<D, Long> repository) {
         this.repository = repository;
     }
 
+    protected JpaRepository<D, Long> getRespository() {
+        return repository;
+    }
+
+    @Override
     public List<T> getAllForExport() {
         List<T> domainObjectDtos = new ArrayList<>();
         List<D> domainObjectList = repository.findAll();
@@ -40,7 +51,8 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         return domainObjectDtos;
     }
 
-    public T getById(Long id) {
+    @Override
+    public T getExportById(Long id) {
         D d = repository.findOne(id);
         T t = null;
 
@@ -51,6 +63,12 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         return t;
     }
 
+    @Override
+    public D getById(Long id) {
+        return repository.findOne(id);
+    }
+
+    @Override
     public void addNew(T t) {
         D d = translator.translate(t);
         repository.saveAndFlush(d);

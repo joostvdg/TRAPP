@@ -32,7 +32,7 @@ public class LocationController
     @RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
     @ResponseBody
     public LocationDto getLocation(@PathVariable Long locationId) {
-        return locationService.getById(locationId);
+        return locationService.getExportById(locationId);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)

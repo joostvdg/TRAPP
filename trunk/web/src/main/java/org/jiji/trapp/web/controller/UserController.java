@@ -31,7 +31,7 @@ public class UserController
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     @ResponseBody
     public UserDto getUser(@PathVariable Long userId) {
-        return userService.getById(userId);
+        return userService.getExportById(userId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

@@ -31,7 +31,7 @@ public class UserRoleController
     @RequestMapping(value = "/{userRoleId}", method = RequestMethod.GET)
     @ResponseBody
     public UserRoleDto getUserRole(@PathVariable Long userRoleId) {
-        return userRoleService.getById(userRoleId);
+        return userRoleService.getExportById(userRoleId);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
