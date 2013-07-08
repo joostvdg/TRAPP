@@ -43,4 +43,15 @@ public class LocationServiceImpl extends AbstractDomainControllerService<Locatio
         return locationTypes;
     }
 
+    @Override
+    public Location getActualLocation(Location translatedLocation) {
+        Long locationId = null;
+
+        if (translatedLocation != null) {
+            locationId = translatedLocation.getId();
+        }
+
+        return getById(locationId);
+    }
+
 }

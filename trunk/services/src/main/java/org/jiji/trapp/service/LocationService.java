@@ -12,4 +12,6 @@ public interface LocationService extends DomainControllerService<LocationDto, Lo
 
     String[] getAllLocationTypes();
 
+    Location getActualLocation(Location location);
+
 }

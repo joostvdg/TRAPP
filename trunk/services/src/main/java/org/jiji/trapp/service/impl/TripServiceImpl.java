@@ -1,9 +1,15 @@
 package org.jiji.trapp.service.impl;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.inject.Inject;
 import org.jiji.trapp.dao.TripDao;
+import org.jiji.trapp.domain.Location;
+import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.domain.Trip;
 import org.jiji.trapp.dto.TripDto;
+import org.jiji.trapp.service.LocationService;
+import org.jiji.trapp.service.TravellerService;
 import org.jiji.trapp.service.TripService;
 import org.jiji.trapp.service.translate.impl.TripTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,12 @@ public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Tr
      */
     private static final long serialVersionUID = 1L;
 
+    @Inject
+    private LocationService locationService;
+
+    @Inject
+    private TravellerService travellerService;
+
     @Autowired
     public void setTripDao(TripDao tripDao) {
         setRepository(tripDao);
@@ -32,4 +44,15 @@ public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Tr
         setTranslator(tripTranslator);
     }
 
+    @Override
+    public void addNew(TripDto tripDto) {
+        Trip trip = getTranslator().translate(tripDto);
+        Traveller organizer = travellerService.getActualTraveller(trip.getOrganizer());
+        trip.setOrganizer(organizer);
+        Set<Traveller> travellers = travellerService.getActualTravellersList(trip.getTravellers());
+        trip.setTravellers(travellers);
+        Location location = locationService.getActualLocation(trip.getLocation());
+        trip.setLocation(location);
+        getRespository().save(trip);
+    }
 }

@@ -1,6 +1,8 @@
 package org.jiji.trapp.service.impl;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.inject.Inject;
 import org.jiji.trapp.dao.TravellerDao;
 import org.jiji.trapp.domain.Traveller;
@@ -64,6 +66,29 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
         User user = userService.getById(userId);
         traveller.setUser(user);
         getRespository().save(traveller);
+    }
+
+    @Override
+    public Traveller getActualTraveller(Traveller translatedTraveller) {
+        Long organizerId = null;
+
+        if (translatedTraveller != null) {
+            organizerId = translatedTraveller.getId();
+        }
+
+        return getById(organizerId);
+    }
+
+    @Override
+    public Set<Traveller> getActualTravellersList(Set<Traveller> translatedTravellers) {
+        Set<Traveller> travellers = new HashSet<>();
+        for (Traveller translatedTraveller : translatedTravellers) {
+            Traveller traveller = getActualTraveller(translatedTraveller);
+            if (traveller != null) {
+                travellers.add(traveller);
+            }
+        }
+        return travellers;
     }
 
 }
