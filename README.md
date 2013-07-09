@@ -49,4 +49,5 @@ My personal preference is SoapUI (<i>http://www.soapui.org/</i>), to get started
 For your convenience there is already a SoapUI project you can open and use in the trunk.
 <br>
 <br>
-*NOTE* If you are going to do some tests which do not add to the project, please create your own test project instead of contimating the project's one.
+*NOTE* If you are going to do some tests which do not add anything specific/new to the test project, please create your own test project instead of abusing the regular project.<br>
+As this, in time, will be used for automated integration tests with deployments.
