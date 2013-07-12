@@ -23,7 +23,7 @@ public class LocationController
     @Inject
     private LocationService locationService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     List<LocationDto> showLocations() {
         return locationService.getAllForExport();
@@ -35,7 +35,7 @@ public class LocationController
         return locationService.getExportById(locationId);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public @ResponseBody
     LocationDto addNewLocation(@RequestBody LocationDto locationDto) {
         locationService.addNew(locationDto);
