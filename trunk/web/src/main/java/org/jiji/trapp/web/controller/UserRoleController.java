@@ -22,7 +22,7 @@ public class UserRoleController
     @Inject
     private UserRoleService userRoleService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     List<UserRoleDto> getUserRoles() {
         return userRoleService.getAllForExport();
@@ -34,7 +34,7 @@ public class UserRoleController
         return userRoleService.getExportById(userRoleId);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public void addNewUserRole(@RequestBody UserRoleDto userRoleDto) {
         userRoleService.addNew(userRoleDto);
     }

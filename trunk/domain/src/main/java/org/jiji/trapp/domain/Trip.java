@@ -31,7 +31,7 @@ public class Trip extends ModelBase implements Serializable
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "travellerId")
     @NotNull
     private Traveller organizer;
 

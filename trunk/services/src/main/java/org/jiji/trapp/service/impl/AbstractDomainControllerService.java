@@ -7,6 +7,7 @@ import org.jiji.trapp.dto.AbstractJsonDto;
 import org.jiji.trapp.service.DomainControllerService;
 import org.jiji.trapp.service.translate.Translator;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author J van der Griendt
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @param <T>
  * @param <D>
  */
+@Transactional
 public abstract class AbstractDomainControllerService<T extends AbstractJsonDto, D extends ModelBase> implements
         DomainControllerService<T, D>
 {
