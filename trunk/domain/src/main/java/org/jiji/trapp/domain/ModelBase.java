@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  * @author J van der Griendt
@@ -25,6 +26,9 @@ public abstract class ModelBase implements Serializable
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private int version;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -83,5 +87,13 @@ public abstract class ModelBase implements Serializable
     @Transient
     public boolean isNew() {
         return getId() == null;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

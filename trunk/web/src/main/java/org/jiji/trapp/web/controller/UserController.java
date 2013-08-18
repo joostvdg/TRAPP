@@ -1,9 +1,16 @@
 package org.jiji.trapp.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.jiji.trapp.dto.UserDto;
+import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +26,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/user")
 public class UserController
 {
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+
     @Inject
     private UserService userService;
+
+    @Inject
+    private RedisService redisService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -30,15 +42,24 @@ public class UserController
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     @ResponseBody
-    public UserDto getUser(@PathVariable Long userId) {
+    public UserDto getUser(@PathVariable Long userId) throws IOException {
         return userService.getExportById(userId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     UserDto addNewUser(@RequestBody UserDto userDto) {
         userService.addNew(userDto);
         return userDto;
     }
 
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
+    public void updateUser(@PathVariable Long userId, HttpServletRequest request) throws IOException {
+        String jsonBody = IOUtils.toString(request.getInputStream());
+        LOG.info("user update, user: {}", jsonBody);
+
+        String key = "user:"+userId;
+        redisService.set(key, jsonBody);
+
+    }
 }

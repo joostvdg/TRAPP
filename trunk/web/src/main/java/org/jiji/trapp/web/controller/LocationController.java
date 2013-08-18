@@ -1,5 +1,6 @@
 package org.jiji.trapp.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import org.jiji.trapp.dto.LocationDto;
@@ -31,11 +32,11 @@ public class LocationController
 
     @RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
     @ResponseBody
-    public LocationDto getLocation(@PathVariable Long locationId) {
+    public LocationDto getLocation(@PathVariable Long locationId) throws IOException {
         return locationService.getExportById(locationId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     LocationDto addNewLocation(@RequestBody LocationDto locationDto) {
         locationService.addNew(locationDto);

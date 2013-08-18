@@ -45,6 +45,16 @@ public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Tr
     }
 
     @Override
+    public Class<TripDto> getDtoClass() {
+        return TripDto.class;
+    }
+
+    @Override
+    public Class<Trip> getDomainClass() {
+        return Trip.class;
+    }
+
+    @Override
     public void addNew(TripDto tripDto) {
         Trip trip = getTranslator().translate(tripDto);
         Traveller organizer = travellerService.getActualTraveller(trip.getOrganizer());

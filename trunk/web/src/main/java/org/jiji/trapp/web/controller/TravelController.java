@@ -1,5 +1,6 @@
 package org.jiji.trapp.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import org.jiji.trapp.dto.TravelDto;
@@ -31,11 +32,11 @@ public class TravelController
 
     @RequestMapping(value = "/{travelId}", method = RequestMethod.GET)
     @ResponseBody
-    public TravelDto getTravel(@PathVariable Long travelId) {
+    public TravelDto getTravel(@PathVariable Long travelId) throws IOException  {
         return travelService.getExportById(travelId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     void addNewTravel(@RequestBody TravelDto travelDto) {
         travelService.addNew(travelDto);

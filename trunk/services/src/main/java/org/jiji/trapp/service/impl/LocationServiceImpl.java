@@ -6,9 +6,12 @@ import org.jiji.trapp.domain.Location;
 import org.jiji.trapp.domain.enums.LocationType;
 import org.jiji.trapp.dto.LocationDto;
 import org.jiji.trapp.service.LocationService;
+import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.translate.impl.LocationTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 /**
  * @author J van der Griendt
@@ -22,6 +25,11 @@ public class LocationServiceImpl extends AbstractDomainControllerService<Locatio
      */
     private static final long serialVersionUID = 1L;
 
+    public static final String LOCATION_TYPES_KEY = "values:locationTypes";
+
+    @Inject
+    private RedisService redisService;
+
     @Autowired
     public void setLocationDao(LocationDao locationDao) {
         setRepository(locationDao);
@@ -34,6 +42,8 @@ public class LocationServiceImpl extends AbstractDomainControllerService<Locatio
 
     @Override
     public String[] getAllLocationTypes() {
+        redisService.get(LOCATION_TYPES_KEY);
+
         String[] locationTypes = new String[LocationType.values().length];
 
         for (int i = 0; i < LocationType.values().length; i++) {
@@ -54,4 +64,13 @@ public class LocationServiceImpl extends AbstractDomainControllerService<Locatio
         return getById(locationId);
     }
 
+    @Override
+    public Class<LocationDto> getDtoClass() {
+        return LocationDto.class;
+    }
+
+    @Override
+    public Class<Location> getDomainClass() {
+        return Location.class;
+    }
 }

@@ -1,5 +1,6 @@
 package org.jiji.trapp.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import org.jiji.trapp.dto.UserRoleDto;
@@ -30,11 +31,11 @@ public class UserRoleController
 
     @RequestMapping(value = "/{userRoleId}", method = RequestMethod.GET)
     @ResponseBody
-    public UserRoleDto getUserRole(@PathVariable Long userRoleId) {
+    public UserRoleDto getUserRole(@PathVariable Long userRoleId) throws IOException  {
         return userRoleService.getExportById(userRoleId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public void addNewUserRole(@RequestBody UserRoleDto userRoleDto) {
         userRoleService.addNew(userRoleDto);
     }

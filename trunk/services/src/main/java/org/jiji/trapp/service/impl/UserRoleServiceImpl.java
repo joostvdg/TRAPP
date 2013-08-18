@@ -32,4 +32,13 @@ public class UserRoleServiceImpl extends AbstractDomainControllerService<UserRol
         setTranslator(userRoleTranslator);
     }
 
+    @Override
+    public Class<UserRoleDto> getDtoClass() {
+        return UserRoleDto.class;
+    }
+
+    @Override
+    public Class<UserRole> getDomainClass() {
+        return UserRole.class;
+    }
 }

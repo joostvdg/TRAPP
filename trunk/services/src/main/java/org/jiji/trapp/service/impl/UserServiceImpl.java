@@ -29,4 +29,14 @@ public class UserServiceImpl extends AbstractDomainControllerService<UserDto, Us
         setTranslator(userTranslator);
     }
 
+
+    @Override
+    public Class<UserDto> getDtoClass() {
+        return UserDto.class;
+    }
+
+    @Override
+    public Class<User> getDomainClass() {
+        return User.class;
+    }
 }

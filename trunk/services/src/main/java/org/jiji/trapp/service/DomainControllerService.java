@@ -1,5 +1,6 @@
 package org.jiji.trapp.service;
 
+import java.io.IOException;
 import java.util.List;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
@@ -10,12 +11,17 @@ import org.jiji.trapp.dto.AbstractJsonDto;
  */
 public interface DomainControllerService<T extends AbstractJsonDto, D extends ModelBase>
 {
-    public List<T> getAllForExport();
 
-    public T getExportById(Long id);
+    Class<T> getDtoClass();
 
-    public D getById(Long id);
+    Class<D> getDomainClass();
 
-    public void addNew(T t);
+    List<T> getAllForExport();
+
+    T getExportById(Long id) throws IOException;
+
+    D getById(Long id);
+
+    void addNew(T t);
 
 }
