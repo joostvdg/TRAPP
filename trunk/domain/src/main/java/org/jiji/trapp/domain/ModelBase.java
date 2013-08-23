@@ -15,7 +15,7 @@ import javax.persistence.Version;
 /**
  * @author J van der Griendt
  * @author H Onrust
- * 
+ *
  */
 @MappedSuperclass
 public abstract class ModelBase implements Serializable
@@ -37,6 +37,9 @@ public abstract class ModelBase implements Serializable
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date created = new Date();
+
+    @Column
+    private boolean draft;
 
     public Long getId() {
         return id;
@@ -60,6 +63,22 @@ public abstract class ModelBase implements Serializable
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 
     @Override
@@ -89,11 +108,4 @@ public abstract class ModelBase implements Serializable
         return getId() == null;
     }
 
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 }

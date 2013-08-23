@@ -7,20 +7,19 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Component
-public class UserRoleTranslator implements Translator<UserRoleDto, UserRole>
+public class UserRoleTranslator extends AbstractTranslator<UserRoleDto, UserRole> implements Translator<UserRoleDto, UserRole>
 {
 
     @Override
     public UserRoleDto translate(UserRole userRole) {
-        Long id = userRole.getId();
         String code = userRole.getCode();
         String description = userRole.getDescription();
 
         UserRoleDto userRoleDto = new UserRoleDto();
-        userRoleDto.setId(id);
+        translateBaseFromDomainToDto(userRole, userRoleDto);
         userRoleDto.setCode(code);
         userRoleDto.setDescription(description);
 
@@ -29,12 +28,11 @@ public class UserRoleTranslator implements Translator<UserRoleDto, UserRole>
 
     @Override
     public UserRole translate(UserRoleDto userRoleDto) {
-        Long id = userRoleDto.getId();
         String code = userRoleDto.getCode();
         String description = userRoleDto.getDescription();
 
         UserRole userRole = new UserRole();
-        userRole.setId(id);
+        translateBaseFromDtoToDomain(userRoleDto, userRole);
         userRole.setCode(code);
         userRole.setDescription(description);
 

@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Component
-public class TripTranslator implements Translator<TripDto, Trip>
+public class TripTranslator extends AbstractTranslator<TripDto, Trip> implements Translator<TripDto, Trip>
 {
 
     @Inject
@@ -28,7 +28,6 @@ public class TripTranslator implements Translator<TripDto, Trip>
 
     @Override
     public TripDto translate(Trip trip) {
-        Long id = trip.getId();
         String name = trip.getName();
         String description = trip.getDescription();
         LocationDto location = locationTranslator.translate(trip.getLocation());
@@ -36,7 +35,7 @@ public class TripTranslator implements Translator<TripDto, Trip>
         List<TravellerDto> travellers = travellerTranslator.translateTravellers(trip.getTravellers());
 
         TripDto tripDto = new TripDto();
-        tripDto.setId(id);
+        translateBaseFromDomainToDto(trip, tripDto);
         tripDto.setName(name);
         tripDto.setDescription(description);
         tripDto.setLocation(location);
@@ -48,7 +47,6 @@ public class TripTranslator implements Translator<TripDto, Trip>
 
     @Override
     public Trip translate(TripDto tripDto) {
-        Long id = tripDto.getId();
         String name = tripDto.getName();
         String description = tripDto.getDescription();
         Location location = locationTranslator.translate(tripDto.getLocation());
@@ -56,7 +54,7 @@ public class TripTranslator implements Translator<TripDto, Trip>
         Set<Traveller> travellers = travellerTranslator.translateTravellers(tripDto.getTravellers());
 
         Trip trip = new Trip();
-        trip.setId(id);
+        translateBaseFromDtoToDomain(tripDto, trip);
         trip.setName(name);
         trip.setDescription(description);
         trip.setLocation(location);

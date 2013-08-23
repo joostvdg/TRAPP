@@ -1,5 +1,7 @@
 package org.jiji.trapp.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +10,7 @@ import org.jiji.trapp.dao.TravellerDao;
 import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.domain.User;
 import org.jiji.trapp.domain.enums.TravellerRole;
+import org.jiji.trapp.dto.TravelDto;
 import org.jiji.trapp.dto.TravellerDto;
 import org.jiji.trapp.service.TravellerService;
 import org.jiji.trapp.service.UserService;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Service
 public class TravellerServiceImpl extends AbstractDomainControllerService<TravellerDto, Traveller> implements TravellerService,
@@ -28,7 +31,7 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
     private UserService userService;
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +67,7 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
     }
 
     @Override
-    public void addNew(TravellerDto travellerDto) {
+    public String addNew(TravellerDto travellerDto,InputStream inputStream) throws IOException {
         Traveller traveller = getTranslator().translate(travellerDto);
         User translatedUser = traveller.getUser();
         Long userId = null;
@@ -75,7 +78,7 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
 
         User user = userService.getById(userId);
         traveller.setUser(user);
-        getRespository().save(traveller);
+        return addNew(traveller, inputStream);
     }
 
     @Override

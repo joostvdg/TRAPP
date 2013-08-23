@@ -1,15 +1,20 @@
 package org.jiji.trapp.service.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.jiji.trapp.JsonTranslator;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
+import org.jiji.trapp.dto.TravelDto;
 import org.jiji.trapp.service.DomainControllerService;
 import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.translate.Translator;
+import org.jiji.trapp.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +25,7 @@ import javax.inject.Inject;
 
 /**
  * @author J van der Griendt
- * 
+ *
  * @param <T> dto for the domain object
  * @param <D> the domain object
  */
@@ -80,13 +85,12 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
     public T getExportById(Long id) throws IOException {
         StopWatch watch = new StopWatch("retreiveUser");
         watch.start();
-        String className = domainClass.getSimpleName();
-        String key = className+id;
+        String key = RedisUtil.generateKeyForClass(domainClass, id);
         String jsonBody = redisService.get(key);
         if (jsonBody != null ) {
             watch.stop();
             LOG.debug("jsonBody retrieved:{}", jsonBody);
-            LOG.info("retreived {} from redis: {}",  className, watch.prettyPrint());
+            LOG.info("retreived {} from redis: {}",  domainClass.getSimpleName(), watch.prettyPrint());
             return (T) JsonTranslator.jsonToObject(jsonBody, dtoClass);
         }
 
@@ -99,7 +103,7 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         LOG.debug("jsonBody going in:{}", jsonBody);
         redisService.set(key, jsonBody);
         watch.stop();
-        LOG.info("retreived {} from db: {}", className,watch.prettyPrint());
+        LOG.info("retrieved {} from db: {}", domainClass.getSimpleName(),watch.prettyPrint());
 
         return t;
     }
@@ -110,8 +114,41 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
     }
 
     @Override
-    public void addNew(T t) {
+    public String addNew(T t, InputStream inputStream) throws IOException {
+        String jsonBody = IOUtils.toString(inputStream);
+
         D d = translator.translate(t);
-        repository.saveAndFlush(d);
+        if (t.isDraft()){
+            if (t.getCreated() == null ) {
+                t.setCreated(new Date());
+            }
+
+            String key = RedisUtil.generateKeyForClass(domainClass, t.getCreated().getTime());
+            redisService.set(key, jsonBody);
+        } else {
+            d = repository.saveAndFlush(d);
+            t.setId(d.getId());
+        }
+
+        return JsonTranslator.objectToJson(t);
+    }
+
+    @Override
+    public String addNew(D d, InputStream inputStream) throws IOException {
+        String jsonBody = IOUtils.toString(inputStream);
+
+        if (d.isDraft()){
+            if (d.getCreated() == null ) {
+                d.setCreated(new Date());
+            }
+
+            String key = RedisUtil.generateKeyForClass(domainClass, d.getCreated().getTime());
+            redisService.set(key, jsonBody);
+        } else {
+            d = repository.saveAndFlush(d);
+        }
+        T t = translator.translate(d);
+
+        return JsonTranslator.objectToJson(t);
     }
 }

@@ -3,6 +3,8 @@ package org.jiji.trapp.web.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.jiji.trapp.dto.UserRoleDto;
 import org.jiji.trapp.service.UserRoleService;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Controller
 @RequestMapping("/userRole")
@@ -36,8 +38,8 @@ public class UserRoleController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addNewUserRole(@RequestBody UserRoleDto userRoleDto) {
-        userRoleService.addNew(userRoleDto);
+    public String addNewUserRole(@RequestBody UserRoleDto userRoleDto,HttpServletRequest request) throws IOException {
+        return userRoleService.addNew(userRoleDto, request.getInputStream());
     }
 
 }

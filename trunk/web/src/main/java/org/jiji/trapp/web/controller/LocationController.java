@@ -3,6 +3,8 @@ package org.jiji.trapp.web.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.jiji.trapp.dto.LocationDto;
 import org.jiji.trapp.service.LocationService;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Controller
 @RequestMapping("/location")
@@ -38,9 +40,8 @@ public class LocationController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    LocationDto addNewLocation(@RequestBody LocationDto locationDto) {
-        locationService.addNew(locationDto);
-        return locationDto;
+    String addNewLocation(@RequestBody LocationDto locationDto, HttpServletRequest request) throws IOException {
+        return locationService.addNew(locationDto, request.getInputStream());
     }
 
 }

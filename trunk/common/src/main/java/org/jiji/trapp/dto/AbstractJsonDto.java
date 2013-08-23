@@ -1,19 +1,31 @@
 package org.jiji.trapp.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author jvandergriendt
- * 
+ *
  */
 public class AbstractJsonDto implements Serializable
 {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
     private Long id;
+    private int version;
+    private Date created;
+    private boolean draft = true;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     /**
      * @return the id
@@ -28,6 +40,14 @@ public class AbstractJsonDto implements Serializable
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 
     /* (non-Javadoc)
@@ -75,4 +95,11 @@ public class AbstractJsonDto implements Serializable
         return String.format("%s [id=%d]", getClass().getSimpleName(), getId());
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 }

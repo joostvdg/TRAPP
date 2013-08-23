@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Controller
 @RequestMapping("/user")
@@ -48,9 +48,8 @@ public class UserController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    UserDto addNewUser(@RequestBody UserDto userDto) {
-        userService.addNew(userDto);
-        return userDto;
+    String addNewUser(@RequestBody UserDto userDto, HttpServletRequest request) throws IOException {
+        return userService.addNew(userDto, request.getInputStream());
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)

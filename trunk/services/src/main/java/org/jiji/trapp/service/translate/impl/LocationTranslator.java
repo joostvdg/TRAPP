@@ -8,21 +8,20 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Component
-public class LocationTranslator implements Translator<LocationDto, Location>
+public class LocationTranslator extends AbstractTranslator<LocationDto, Location> implements Translator<LocationDto, Location>
 {
 
     @Override
     public LocationDto translate(Location location) {
-        Long id = location.getId();
         String name = location.getName();
         String description = location.getDescription();
         String locationType = location.getLocationType().name();
 
         LocationDto locationDto = new LocationDto();
-        locationDto.setId(id);
+        translateBaseFromDomainToDto(location, locationDto);
         locationDto.setName(name);
         locationDto.setDescription(description);
         locationDto.setLocationType(locationType);
@@ -32,13 +31,12 @@ public class LocationTranslator implements Translator<LocationDto, Location>
 
     @Override
     public Location translate(LocationDto locationDto) {
-        Long id = locationDto.getId();
         String name = locationDto.getName();
         String description = locationDto.getDescription();
         LocationType locationType = LocationType.valueOf(locationDto.getLocationType());
 
         Location location = new Location();
-        location.setId(id);
+        translateBaseFromDtoToDomain(locationDto, location);
         location.setName(name);
         location.setDescription(description);
         location.setLocationType(locationType);

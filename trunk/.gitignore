@@ -4,4 +4,6 @@
 *.project
 /.settings
 .classpath
-.idea
+.idea/
+*.iml
+*.iws

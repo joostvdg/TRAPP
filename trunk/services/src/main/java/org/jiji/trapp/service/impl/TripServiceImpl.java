@@ -1,5 +1,7 @@
 package org.jiji.trapp.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Set;
 import javax.inject.Inject;
@@ -17,14 +19,14 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Service
 public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Trip> implements TripService, Serializable
 {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +57,7 @@ public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Tr
     }
 
     @Override
-    public void addNew(TripDto tripDto) {
+    public String addNew(TripDto tripDto,InputStream inputStream) throws IOException {
         Trip trip = getTranslator().translate(tripDto);
         Traveller organizer = travellerService.getActualTraveller(trip.getOrganizer());
         trip.setOrganizer(organizer);
@@ -63,6 +65,6 @@ public class TripServiceImpl extends AbstractDomainControllerService<TripDto, Tr
         trip.setTravellers(travellers);
         Location location = locationService.getActualLocation(trip.getLocation());
         trip.setLocation(location);
-        getRespository().save(trip);
+        return addNew(trip, inputStream);
     }
 }

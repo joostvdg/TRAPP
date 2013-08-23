@@ -3,6 +3,8 @@ package org.jiji.trapp.web.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.jiji.trapp.dto.TripDto;
 import org.jiji.trapp.service.TripService;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Controller
 @RequestMapping("/trip")
@@ -38,9 +40,8 @@ public class TripController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    TripDto addNewTrip(@RequestBody TripDto tripDto) {
-        tripService.addNew(tripDto);
-        return tripDto;
+    String addNewTrip(@RequestBody TripDto tripDto, HttpServletRequest request) throws IOException {
+        return tripService.addNew(tripDto, request.getInputStream());
     }
 
 }

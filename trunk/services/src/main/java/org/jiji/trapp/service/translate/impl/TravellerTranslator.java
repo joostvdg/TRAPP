@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @Component
-public class TravellerTranslator implements Translator<TravellerDto, Traveller>
+public class TravellerTranslator extends AbstractTranslator<TravellerDto, Traveller> implements Translator<TravellerDto, Traveller>
 {
     @Inject
     private UserTranslator userTranslator;
@@ -30,6 +30,7 @@ public class TravellerTranslator implements Translator<TravellerDto, Traveller>
         UserDto user = userTranslator.translate(traveller.getUser());
 
         TravellerDto travellerDto = new TravellerDto();
+        translateBaseFromDomainToDto(traveller, travellerDto);
         travellerDto.setId(id);
         travellerDto.setTravellerRole(travellerRole);
         travellerDto.setUser(user);
@@ -39,12 +40,11 @@ public class TravellerTranslator implements Translator<TravellerDto, Traveller>
 
     @Override
     public Traveller translate(TravellerDto travellerDto) {
-        Long id = travellerDto.getId();
         TravellerRole travellerRole = TravellerRole.valueOf(travellerDto.getTravellerRole());
         User user = userTranslator.translate(travellerDto.getUser());
 
         Traveller traveller = new Traveller();
-        traveller.setId(id);
+        translateBaseFromDtoToDomain(travellerDto, traveller);
         traveller.setTravellerRole(travellerRole);
         traveller.setUser(user);
         return traveller;

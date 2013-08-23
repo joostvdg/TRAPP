@@ -1,13 +1,16 @@
 package org.jiji.trapp.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
+import org.jiji.trapp.dto.TravelDto;
+import org.jiji.trapp.dto.UserDto;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 public interface DomainControllerService<T extends AbstractJsonDto, D extends ModelBase>
 {
@@ -22,6 +25,7 @@ public interface DomainControllerService<T extends AbstractJsonDto, D extends Mo
 
     D getById(Long id);
 
-    void addNew(T t);
+    String addNew(T t, InputStream inputStream) throws IOException;
 
+    String addNew(D d, InputStream inputStream) throws IOException;
 }
