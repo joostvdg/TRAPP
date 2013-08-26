@@ -11,4 +11,6 @@ public interface RedisService {
     void set(String key, String jsonBody);
 
     String get(String key);
+
+    boolean isAvailable();
 }

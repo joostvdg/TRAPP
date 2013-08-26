@@ -39,7 +39,7 @@ public class TravellerController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    String addNewTraveller(@RequestBody TravellerDto travellerDto, HttpServletRequest request) throws IOException {
-        return travellerService.addNew(travellerDto, request.getInputStream());
+    String addNewTraveller(HttpServletRequest request) throws IOException {
+        return travellerService.addNew(request.getInputStream());
     }
 }

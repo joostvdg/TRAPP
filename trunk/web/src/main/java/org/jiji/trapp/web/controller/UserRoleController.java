@@ -38,8 +38,8 @@ public class UserRoleController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addNewUserRole(@RequestBody UserRoleDto userRoleDto,HttpServletRequest request) throws IOException {
-        return userRoleService.addNew(userRoleDto, request.getInputStream());
+    public String addNewUserRole(HttpServletRequest request) throws IOException {
+        return userRoleService.addNew(request.getInputStream());
     }
 
 }

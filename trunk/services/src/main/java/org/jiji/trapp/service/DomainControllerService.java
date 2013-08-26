@@ -25,7 +25,7 @@ public interface DomainControllerService<T extends AbstractJsonDto, D extends Mo
 
     D getById(Long id);
 
-    String addNew(T t, InputStream inputStream) throws IOException;
+    String addNew(InputStream inputStream) throws IOException;
 
-    String addNew(D d, InputStream inputStream) throws IOException;
+    String addNew(D d, String jsonBody) throws IOException;
 }

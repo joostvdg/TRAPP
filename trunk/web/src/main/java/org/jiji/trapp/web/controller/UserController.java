@@ -6,9 +6,12 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.jiji.trapp.JsonTranslator;
+import org.jiji.trapp.domain.User;
 import org.jiji.trapp.dto.UserDto;
 import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.UserService;
+import org.jiji.trapp.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -47,18 +50,15 @@ public class UserController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody
-    String addNewUser(@RequestBody UserDto userDto, HttpServletRequest request) throws IOException {
-        return userService.addNew(userDto, request.getInputStream());
+    public String addNewUser(HttpServletRequest request) throws IOException {
+        return userService.addNew(request.getInputStream());
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     public void updateUser(@PathVariable Long userId, HttpServletRequest request) throws IOException {
-        String jsonBody = IOUtils.toString(request.getInputStream());
-        LOG.info("user update, user: {}", jsonBody);
-
-        String key = "user:"+userId;
+        String jsonBody = IOUtils.toString(request.getInputStream(), "UTF-8");
+        UserDto userDto = (UserDto) JsonTranslator.jsonToObject(jsonBody, UserDto.class);
+        String key = RedisUtil.generateKeyForClass(User.class, userDto.getId());
         redisService.set(key, jsonBody);
-
     }
 }

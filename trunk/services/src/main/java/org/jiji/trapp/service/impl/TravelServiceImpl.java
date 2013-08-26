@@ -5,11 +5,15 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Set;
 import javax.inject.Inject;
+
+import org.apache.commons.io.IOUtils;
+import org.jiji.trapp.JsonTranslator;
 import org.jiji.trapp.dao.TravelDao;
 import org.jiji.trapp.domain.Location;
 import org.jiji.trapp.domain.Travel;
 import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.dto.TravelDto;
+import org.jiji.trapp.dto.TravellerDto;
 import org.jiji.trapp.service.LocationService;
 import org.jiji.trapp.service.TravelService;
 import org.jiji.trapp.service.TravellerService;
@@ -57,7 +61,9 @@ public class TravelServiceImpl extends AbstractDomainControllerService<TravelDto
     }
 
     @Override
-    public String addNew(TravelDto travelDto,InputStream inputStream) throws IOException {
+    public String addNew(InputStream inputStream) throws IOException {
+        String jsonBody = IOUtils.toString(inputStream, "UTF-8");
+        TravelDto travelDto = (TravelDto) JsonTranslator.jsonToObject(jsonBody, TravelDto.class);
         Travel travel = getTranslator().translate(travelDto);
         Traveller organizer = travellerService.getActualTraveller(travel.getOrganizer());
         travel.setOrganizer(organizer);
@@ -65,7 +71,7 @@ public class TravelServiceImpl extends AbstractDomainControllerService<TravelDto
         travel.setTravellers(travellers);
         Location location = locationService.getActualLocation(travel.getLocation());
         travel.setLocation(location);
-        return addNew(travel, inputStream);
+        return addNew(travel, jsonBody);
     }
 
 }

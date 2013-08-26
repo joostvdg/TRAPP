@@ -40,8 +40,8 @@ public class TripController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    String addNewTrip(@RequestBody TripDto tripDto, HttpServletRequest request) throws IOException {
-        return tripService.addNew(tripDto, request.getInputStream());
+    String addNewTrip(HttpServletRequest request) throws IOException {
+        return tripService.addNew(request.getInputStream());
     }
 
 }

@@ -40,8 +40,8 @@ public class LocationController
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    String addNewLocation(@RequestBody LocationDto locationDto, HttpServletRequest request) throws IOException {
-        return locationService.addNew(locationDto, request.getInputStream());
+    String addNewLocation(HttpServletRequest request) throws IOException {
+        return locationService.addNew(request.getInputStream());
     }
 
 }

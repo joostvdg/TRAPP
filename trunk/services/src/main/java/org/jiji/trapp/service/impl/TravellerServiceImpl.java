@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
+
+import org.apache.commons.io.IOUtils;
+import org.jiji.trapp.JsonTranslator;
 import org.jiji.trapp.dao.TravellerDao;
 import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.domain.User;
@@ -67,7 +70,9 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
     }
 
     @Override
-    public String addNew(TravellerDto travellerDto,InputStream inputStream) throws IOException {
+    public String addNew(InputStream inputStream) throws IOException {
+        String jsonBody = IOUtils.toString(inputStream, "UTF-8");
+        TravellerDto travellerDto = (TravellerDto) JsonTranslator.jsonToObject(jsonBody, TravellerDto.class);
         Traveller traveller = getTranslator().translate(travellerDto);
         User translatedUser = traveller.getUser();
         Long userId = null;
@@ -78,7 +83,7 @@ public class TravellerServiceImpl extends AbstractDomainControllerService<Travel
 
         User user = userService.getById(userId);
         traveller.setUser(user);
-        return addNew(traveller, inputStream);
+        return addNew(traveller, jsonBody);
     }
 
     @Override

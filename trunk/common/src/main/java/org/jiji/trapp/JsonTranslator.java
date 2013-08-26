@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.jiji.trapp.dto.AbstractJsonDto;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * User: Joost van der Griendt
@@ -18,6 +19,9 @@ public class JsonTranslator {
         mapper = new ObjectMapper();
         mapper.configure(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
+        mapper.configure(DeserializationConfig.Feature.AUTO_DETECT_SETTERS, true);
+        mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
     }
 
     public static final String objectToJson(Object jsonDto) throws IOException {
@@ -26,6 +30,10 @@ public class JsonTranslator {
 
     public static final AbstractJsonDto jsonToObject(String json, Class<? extends AbstractJsonDto> clasz) throws IOException {
         return mapper.readValue(json, clasz);
+    }
+
+    public static final AbstractJsonDto jsonToObject(InputStream source, Class<? extends AbstractJsonDto> clasz) throws IOException {
+        return mapper.readValue(source, clasz);
     }
 
 }

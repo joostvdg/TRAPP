@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.jiji.trapp.JsonTranslator;
 import org.jiji.trapp.domain.ModelBase;
+import org.jiji.trapp.domain.User;
 import org.jiji.trapp.dto.AbstractJsonDto;
 import org.jiji.trapp.dto.TravelDto;
 import org.jiji.trapp.service.DomainControllerService;
@@ -86,12 +87,15 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         StopWatch watch = new StopWatch("retreiveUser");
         watch.start();
         String key = RedisUtil.generateKeyForClass(domainClass, id);
-        String jsonBody = redisService.get(key);
-        if (jsonBody != null ) {
-            watch.stop();
-            LOG.debug("jsonBody retrieved:{}", jsonBody);
-            LOG.info("retreived {} from redis: {}",  domainClass.getSimpleName(), watch.prettyPrint());
-            return (T) JsonTranslator.jsonToObject(jsonBody, dtoClass);
+
+        if (redisService.isAvailable()) {
+            String jsonBody = redisService.get(key);
+            if (jsonBody != null ) {
+                watch.stop();
+                LOG.debug("jsonBody retrieved:{}", jsonBody);
+                LOG.info("retreived {} from redis: {}",  domainClass.getSimpleName(), watch.prettyPrint());
+                return (T) JsonTranslator.jsonToObject(jsonBody, dtoClass);
+            }
         }
 
         D d = repository.findOne(id);
@@ -99,9 +103,13 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
         if (d != null) {
             t = translator.translate(d);
         }
-        jsonBody = JsonTranslator.objectToJson(t);
-        LOG.debug("jsonBody going in:{}", jsonBody);
-        redisService.set(key, jsonBody);
+
+        if (redisService.isAvailable()) {
+            String jsonBody = JsonTranslator.objectToJson(t);
+            LOG.debug("jsonBody going in:{}", jsonBody);
+            redisService.set(key, jsonBody);
+        }
+
         watch.stop();
         LOG.info("retrieved {} from db: {}", domainClass.getSimpleName(),watch.prettyPrint());
 
@@ -114,41 +122,35 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
     }
 
     @Override
-    public String addNew(T t, InputStream inputStream) throws IOException {
-        String jsonBody = IOUtils.toString(inputStream);
-
+    public String addNew(InputStream inputStream) throws IOException {
+        String jsonBody = IOUtils.toString(inputStream, "UTF-8");
+        T t = (T) JsonTranslator.jsonToObject(jsonBody, dtoClass);
         D d = translator.translate(t);
-        if (t.isDraft()){
-            if (t.getCreated() == null ) {
-                t.setCreated(new Date());
-            }
-
-            String key = RedisUtil.generateKeyForClass(domainClass, t.getCreated().getTime());
-            redisService.set(key, jsonBody);
-        } else {
-            d = repository.saveAndFlush(d);
-            t.setId(d.getId());
-        }
-
-        return JsonTranslator.objectToJson(t);
+        return addNew(d, jsonBody);
     }
 
     @Override
-    public String addNew(D d, InputStream inputStream) throws IOException {
-        String jsonBody = IOUtils.toString(inputStream);
+    public String addNew(D d, String jsonBody) throws IOException {
+        StopWatch watch = new StopWatch("store");
+        String storingStyle = "db";
+        watch.start();
 
-        if (d.isDraft()){
+        if (d.isDraft() && redisService.isAvailable()){
             if (d.getCreated() == null ) {
                 d.setCreated(new Date());
             }
 
             String key = RedisUtil.generateKeyForClass(domainClass, d.getCreated().getTime());
             redisService.set(key, jsonBody);
+            storingStyle = "redis";
         } else {
+            if (d instanceof User)
+                LOG.info("Saving user with email " + ((User) d).getEmail());
             d = repository.saveAndFlush(d);
         }
         T t = translator.translate(d);
-
+        watch.stop();
+        LOG.info(String.format("Storing %s in %s: %s", domainClass.getSimpleName(),storingStyle,watch.prettyPrint()));
         return JsonTranslator.objectToJson(t);
     }
 }
