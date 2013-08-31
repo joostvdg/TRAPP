@@ -1,4 +1,4 @@
-package org.jiji.trapp;
+package org.jiji.trapp.util;
 
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;

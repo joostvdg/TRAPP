@@ -41,6 +41,11 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>nl.flusso.commons</groupId>
+            <artifactId>assetservice</artifactId>
+        </dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -68,4 +73,4 @@
 		</plugins>
 	</build>
 </project>
-		
+

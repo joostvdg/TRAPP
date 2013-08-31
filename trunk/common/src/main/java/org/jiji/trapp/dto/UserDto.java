@@ -4,7 +4,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
  * @author J van der Griendt
- * 
+ *
  */
 @JsonRootName("user")
 public class UserDto extends AbstractJsonDto
@@ -16,6 +16,7 @@ public class UserDto extends AbstractJsonDto
     private String surnamePrefix;
     private String surname;
     private String email;
+    private String avatar;
 
     public String getName() {
         return name;
@@ -49,4 +50,11 @@ public class UserDto extends AbstractJsonDto
         this.email = email;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

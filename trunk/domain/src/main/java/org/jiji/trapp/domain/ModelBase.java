@@ -39,7 +39,7 @@ public abstract class ModelBase implements Serializable
     private Date created = new Date();
 
     @Column
-    private boolean draft;
+    private boolean draft = true;
 
     public Long getId() {
         return id;

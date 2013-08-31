@@ -20,6 +20,7 @@ public class CrossDomainFilter extends OncePerRequestFilter
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
+	    response.setHeader("Allow", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS");
         filterChain.doFilter(request, response);
     }
 

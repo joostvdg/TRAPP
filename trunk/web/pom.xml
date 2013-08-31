@@ -50,7 +50,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -106,14 +106,20 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-		</dependency>	 
+		</dependency>
 
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 		</dependency>
 
-		<!-- Logging <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+        <dependency>
+            <groupId>nl.flusso.commons</groupId>
+            <artifactId>assetservice</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+		<!-- Logging <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId>
 			</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -130,7 +136,7 @@
 	<build>
 		<finalName>trapp</finalName>
 
-		<!-- this will allow you to use properties in the root pom in java configuration 
+		<!-- this will allow you to use properties in the root pom in java configuration
 			files -->
 		<resources>
 			<resource>
@@ -182,4 +188,4 @@
 		</plugins>
 	</build>
 </project>
-		
+

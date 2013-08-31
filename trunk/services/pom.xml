@@ -65,6 +65,11 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>nl.flusso.commons</groupId>
+            <artifactId>assetservice</artifactId>
+        </dependency>
+
 	</dependencies>
 
 	<build>

@@ -8,12 +8,11 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
-import org.jiji.trapp.JsonTranslator;
+import org.jiji.trapp.util.JsonTranslator;
 import org.jiji.trapp.dao.TravellerDao;
 import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.domain.User;
 import org.jiji.trapp.domain.enums.TravellerRole;
-import org.jiji.trapp.dto.TravelDto;
 import org.jiji.trapp.dto.TravellerDto;
 import org.jiji.trapp.service.TravellerService;
 import org.jiji.trapp.service.UserService;

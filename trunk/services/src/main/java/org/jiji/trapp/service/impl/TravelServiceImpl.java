@@ -7,13 +7,12 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
-import org.jiji.trapp.JsonTranslator;
+import org.jiji.trapp.util.JsonTranslator;
 import org.jiji.trapp.dao.TravelDao;
 import org.jiji.trapp.domain.Location;
 import org.jiji.trapp.domain.Travel;
 import org.jiji.trapp.domain.Traveller;
 import org.jiji.trapp.dto.TravelDto;
-import org.jiji.trapp.dto.TravellerDto;
 import org.jiji.trapp.service.LocationService;
 import org.jiji.trapp.service.TravelService;
 import org.jiji.trapp.service.TravellerService;

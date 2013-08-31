@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.jiji.trapp.JsonTranslator;
+import org.jiji.trapp.util.JsonTranslator;
 import org.jiji.trapp.domain.ModelBase;
-import org.jiji.trapp.domain.User;
 import org.jiji.trapp.dto.AbstractJsonDto;
-import org.jiji.trapp.dto.TravelDto;
+import org.jiji.trapp.dto.UserDto;
+import org.jiji.trapp.service.AssetService;
 import org.jiji.trapp.service.DomainControllerService;
 import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.translate.Translator;
@@ -43,6 +43,9 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
 
     @Inject
     private RedisService redisService;
+
+    @Inject
+    private AssetService assetService;
 
     private final Class<T> dtoClass;
 
@@ -92,7 +95,6 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
             String jsonBody = redisService.get(key);
             if (jsonBody != null ) {
                 watch.stop();
-                LOG.debug("jsonBody retrieved:{}", jsonBody);
                 LOG.info("retreived {} from redis: {}",  domainClass.getSimpleName(), watch.prettyPrint());
                 return (T) JsonTranslator.jsonToObject(jsonBody, dtoClass);
             }
@@ -106,13 +108,11 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
 
         if (redisService.isAvailable()) {
             String jsonBody = JsonTranslator.objectToJson(t);
-            LOG.debug("jsonBody going in:{}", jsonBody);
             redisService.set(key, jsonBody);
         }
 
         watch.stop();
         LOG.info("retrieved {} from db: {}", domainClass.getSimpleName(),watch.prettyPrint());
-
         return t;
     }
 
@@ -131,26 +131,29 @@ public abstract class AbstractDomainControllerService<T extends AbstractJsonDto,
 
     @Override
     public String addNew(D d, String jsonBody) throws IOException {
-        StopWatch watch = new StopWatch("store");
+        StopWatch watch = new StopWatch("store domain object");
         String storingStyle = "db";
-        watch.start();
-
         if (d.isDraft() && redisService.isAvailable()){
+            watch.start("redis store");
             if (d.getCreated() == null ) {
                 d.setCreated(new Date());
             }
-
             String key = RedisUtil.generateKeyForClass(domainClass, d.getCreated().getTime());
             redisService.set(key, jsonBody);
             storingStyle = "redis";
+            watch.stop();
         } else {
-            if (d instanceof User)
-                LOG.info("Saving user with email " + ((User) d).getEmail());
+            watch.start("db store");
             d = repository.saveAndFlush(d);
+            watch.stop();
         }
+        watch.start("translate domain");
         T t = translator.translate(d);
         watch.stop();
+        watch.start("translate dto");
+        String translatedDomainObject = JsonTranslator.objectToJson(t);
+        watch.stop();
         LOG.info(String.format("Storing %s in %s: %s", domainClass.getSimpleName(),storingStyle,watch.prettyPrint()));
-        return JsonTranslator.objectToJson(t);
+        return translatedDomainObject;
     }
 }
