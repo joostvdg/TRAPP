@@ -47,20 +47,20 @@
 
 		<!-- External Dependencies -->
 		<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
 
 		<!-- Spring -->
 		<dependency>
@@ -88,15 +88,20 @@
 			<artifactId>spring-tx</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 
 		<!-- Jackson -->
 		<dependency>
@@ -113,14 +118,17 @@
 			<artifactId>joda-time</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>nl.flusso.commons</groupId>
-            <artifactId>assetservice</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>nl.flusso.commons</groupId>
+			<artifactId>assetservice</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-		<!-- Logging <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId>
-			</dependency> -->
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -136,7 +144,7 @@
 	<build>
 		<finalName>trapp</finalName>
 
-		<!-- this will allow you to use properties in the root pom in java configuration
+		<!-- this will allow you to use properties in the root pom in java configuration 
 			files -->
 		<resources>
 			<resource>

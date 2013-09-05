@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
-import org.jiji.trapp.util.JsonTranslator;
 import org.jiji.trapp.domain.User;
 import org.jiji.trapp.dto.UserDto;
 import org.jiji.trapp.service.RedisService;
 import org.jiji.trapp.service.UserService;
+import org.jiji.trapp.util.JsonTranslator;
 import org.jiji.trapp.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- *
+ * 
  */
 @Controller
 @RequestMapping("/user")
@@ -55,7 +53,7 @@ public class UserController
         return userService.addNew(request.getInputStream());
     }
 
-	@ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     public void updateUser(@PathVariable Long userId, HttpServletRequest request) throws IOException {
         String jsonBody = IOUtils.toString(request.getInputStream(), "UTF-8");

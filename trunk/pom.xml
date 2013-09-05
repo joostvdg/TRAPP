@@ -113,6 +113,11 @@
 				<version>2.6</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.8</version>
+			</dependency>
+			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
 				<version>1.4</version>
@@ -190,11 +195,11 @@
 				<version>1.7.3</version>
 			</dependency>
 
-            <dependency>
-                <groupId>com.lambdaworks</groupId>
-                <artifactId>lettuce</artifactId>
-                <version>2.3.3</version>
-            </dependency>
+			<dependency>
+				<groupId>com.lambdaworks</groupId>
+				<artifactId>lettuce</artifactId>
+				<version>2.3.3</version>
+			</dependency>
 
 			<!-- Jackson -->
 			<dependency>
@@ -226,12 +231,12 @@
 				<version>1.2.17</version>
 			</dependency>
 
-            <!-- Flusso -->
-            <dependency>
-                <groupId>nl.flusso.commons</groupId>
-                <artifactId>assetservice</artifactId>
-                <version>2.0.1-SNAPSHOT</version>
-            </dependency>
+			<!-- Flusso -->
+			<dependency>
+				<groupId>nl.flusso.commons</groupId>
+				<artifactId>assetservice</artifactId>
+				<version>3.0.1-SNAPSHOT</version>
+			</dependency>
 
 			<!-- Test dependencies -->
 			<dependency>

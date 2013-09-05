@@ -1,11 +1,10 @@
 package org.jiji.trapp.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jiji.trapp.dto.AbstractJsonDto;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * User: Joost van der Griendt

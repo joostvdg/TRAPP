@@ -4,19 +4,17 @@ import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-
 import org.jiji.trapp.dto.UserRoleDto;
 import org.jiji.trapp.service.UserRoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
- *
+ * 
  */
 @Controller
 @RequestMapping("/userRole")
@@ -33,7 +31,7 @@ public class UserRoleController
 
     @RequestMapping(value = "/{userRoleId}", method = RequestMethod.GET)
     @ResponseBody
-    public UserRoleDto getUserRole(@PathVariable Long userRoleId) throws IOException  {
+    public UserRoleDto getUserRole(@PathVariable Long userRoleId) throws IOException {
         return userRoleService.getExportById(userRoleId);
     }
 

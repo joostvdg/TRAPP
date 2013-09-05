@@ -5,12 +5,10 @@ import java.io.InputStream;
 import java.util.List;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
-import org.jiji.trapp.dto.TravelDto;
-import org.jiji.trapp.dto.UserDto;
 
 /**
  * @author J van der Griendt
- *
+ * 
  */
 public interface DomainControllerService<T extends AbstractJsonDto, D extends ModelBase>
 {
