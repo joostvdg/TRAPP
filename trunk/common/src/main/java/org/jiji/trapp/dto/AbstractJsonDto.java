@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * @author jvandergriendt
- *
+ * 
  */
 public class AbstractJsonDto implements Serializable
 {

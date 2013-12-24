@@ -1,13 +1,11 @@
 package org.jiji.trapp.dto;
 
 import java.util.List;
-import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
  * @author J van der Griendt
  * 
  */
-@JsonRootName("travel")
 public class TravelDto extends AbstractJsonDto
 {
 

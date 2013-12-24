@@ -1,12 +1,10 @@
 package org.jiji.trapp.dto;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
  * @author J van der Griendt
  * 
  */
-@JsonRootName("location")
 public class LocationDto extends AbstractJsonDto
 {
 

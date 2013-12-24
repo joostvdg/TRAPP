@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @ComponentScan("org.jiji.trapp")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
+@ImportResource("classpath:/springmvc-resteasy.xml")
 public class WebMvcConfiguration extends WebMvcConfigurationSupport
 {
 
@@ -98,5 +100,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         super.setApplicationContext(applicationContext);
         this.applicationContext = applicationContext;
+    }
+
+    @Bean
+    public JacksonSetup getJacksonSetup() {
+        return new JacksonSetup();
     }
 }

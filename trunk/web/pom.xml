@@ -63,7 +63,8 @@
 		</dependency>
 
 		<!-- Spring -->
-		<!-- Spring core is used during compile time, even if the maven dependency plugin doesn't recognize this! -->
+		<!-- Spring core is used during compile time, even if the maven dependency 
+			plugin doesn't recognize this! -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -120,6 +121,33 @@
 			<artifactId>joda-time</artifactId>
 		</dependency>
 
+		<!-- RestEasy -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-servlet-initializer</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>jaxrs-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-spring</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Flusso -->
 		<dependency>
 			<groupId>nl.flusso.commons</groupId>
 			<artifactId>assetservice</artifactId>

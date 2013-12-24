@@ -1,22 +1,21 @@
 package org.jiji.trapp.service.translate.impl;
 
-
+import java.util.Date;
 import org.jiji.trapp.domain.ModelBase;
 import org.jiji.trapp.dto.AbstractJsonDto;
-
-import java.util.Date;
 
 /**
  * User: Joost van der Griendt
  * Date: 8/19/13
  * Time: 10:24 PM
  */
-public abstract class AbstractTranslator<T extends AbstractJsonDto, D extends ModelBase> {
+public abstract class AbstractTranslator<T extends AbstractJsonDto, D extends ModelBase>
+{
 
     public T translateBaseFromDomainToDto(D d, T t) {
         Long id = d.getId();
         int version = d.getVersion();
-        boolean isDraft = d.isDraft();
+        boolean isDraft = d.isDraft() == null ? true : d.isDraft();
         Date created = d.getCreated();
 
         t.setId(id);

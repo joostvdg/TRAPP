@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import org.apache.commons.io.IOUtils;
 import org.jiji.trapp.domain.User;
 import org.jiji.trapp.dto.UserDto;
@@ -15,16 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author J van der Griendt
  * 
  */
-@Controller
-@RequestMapping("/user")
+@Controller()
+@Path("/user")
 public class UserController
 {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
@@ -35,26 +37,27 @@ public class UserController
     @Inject
     private RedisService redisService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
+    @GET
+    @Produces("application/json")
     public List<UserDto> getUsers() {
         return userService.getAllForExport();
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    @ResponseBody
+    @GET
+    @Path("/{userId}")
+    @Produces("application/json")
     public UserDto getUser(@PathVariable Long userId) throws IOException {
         return userService.getExportById(userId);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
+    @POST
+    @Produces("application/json")
     public String addNewUser(HttpServletRequest request) throws IOException {
         return userService.addNew(request.getInputStream());
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
+    @PUT
+    @Path("/{userId}")
     public void updateUser(@PathVariable Long userId, HttpServletRequest request) throws IOException {
         String jsonBody = IOUtils.toString(request.getInputStream(), "UTF-8");
         LOG.debug(String.format("Update User: %s ", jsonBody));

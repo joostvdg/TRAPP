@@ -1,14 +1,15 @@
 package org.jiji.trapp.web.controller;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import org.jiji.trapp.service.LocationService;
 import org.jiji.trapp.service.TravellerService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+@Controller()
+@Path(value = "")
 public class ValueController
 {
     @Inject
@@ -17,14 +18,16 @@ public class ValueController
     @Inject
     private LocationService locationService;
 
-    @RequestMapping(value = "/travellerRole", method = RequestMethod.GET)
-    @ResponseBody
+    @Path("/travellerRole")
+    @GET
+    @Produces("application/json")
     public String[] getTravellerRoles() {
         return travellerService.getAllTravellerRoles();
     }
 
-    @RequestMapping(value = "/locationType", method = RequestMethod.GET)
-    @ResponseBody
+    @Path("/locationType")
+    @GET
+    @Produces("application/json")
     public String[] getLocationTypes() {
         return locationService.getAllLocationTypes();
     }

@@ -15,7 +15,7 @@ import javax.persistence.Version;
 /**
  * @author J van der Griendt
  * @author H Onrust
- *
+ * 
  */
 @MappedSuperclass
 public abstract class ModelBase implements Serializable
@@ -39,7 +39,7 @@ public abstract class ModelBase implements Serializable
     private Date created = new Date();
 
     @Column
-    private boolean draft = true;
+    private Boolean draft = Boolean.TRUE;;
 
     public Long getId() {
         return id;
@@ -73,11 +73,11 @@ public abstract class ModelBase implements Serializable
         this.version = version;
     }
 
-    public boolean isDraft() {
+    public Boolean isDraft() {
         return draft;
     }
 
-    public void setDraft(boolean draft) {
+    public void setDraft(Boolean draft) {
         this.draft = draft;
     }
 
